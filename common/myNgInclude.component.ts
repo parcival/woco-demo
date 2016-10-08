@@ -1,28 +1,52 @@
 import {
-    Component, Input, ViewContainerRef, OnInit, ComponentResolver, ViewChild
+  NgModule,
+  Component,
+  Directive,
+  Input,
+  ComponentMetadata,
+  ReflectiveInjector,
+  ViewContainerRef,
+  Compiler,
+  ModuleWithComponentFactories
 } from "@angular/core";
-import {FORM_DIRECTIVES} from "@angular/common";
 
-@Component({
+import { BrowserModule } from '@angular/platform-browser'
+
+@Directive({
     selector: 'my-ng-include',
-    template: '<div #myNgIncludeContent></div>'
 })
-export class MyNgInclude implements OnInit {
+export class MyNgInclude {
 
     @Input('src')
     private templateUrl: string;
 
-    @ViewChild('myNgIncludeContent', { read: ViewContainerRef })
-    protected contentTarget: ViewContainerRef;
-    
-    constructor(private componentResolver: ComponentResolver) {}
+    constructor(private vcRef: ViewContainerRef, private compiler: Compiler) {}
 
-    ngOnInit() {
-        var dynamicComponent = this.createContentComponent(this.templateUrl);
-        this.componentResolver.resolveComponent(dynamicComponent)
-            .then((factory: any) => this.contentTarget.createComponent(factory));
+    ngAfterViewInit() {
+        const url = this.templateUrl;
+        @Component({
+          selector: 'dynamic-comp',
+          templateUrl: url
+        })
+        class DynamicComponent  {
+            @Input() public url: string;
+        };
+
+        @NgModule({
+          imports: [BrowserModule],
+          declarations: [DynamicComponent]
+        })
+        class DynamicModule {}
+        this.compiler.compileModuleAndAllComponentsAsync(DynamicModule)
+          .then(({moduleFactory, componentFactories}) => {
+            const compFactory = componentFactories.find(x => x.componentType === DynamicComponent);
+            const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+            const cmpRef = this.vcRef.createComponent(compFactory, 0, injector, []);
+            cmpRef.instance.url = url;
+        });
     }
 
+/*
     createContentComponent(templateUrl) {
         @Component({
             selector: 'my-ng-include-content',
@@ -32,4 +56,5 @@ export class MyNgInclude implements OnInit {
         class MyNgIncludeContent {}
         return MyNgIncludeContent ;
     }
+    */
 }

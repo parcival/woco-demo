@@ -1,0 +1,11 @@
+<h1>Voorbeeldje van geinjecteerde content</h1>
+<div>
+  <accordion [closeOthers]="true">
+    <accordion-group heading="Eerste tekst">
+        <my-ng-include src="tpls/info1.html"></my-ng-include>
+    </accordion-group>
+    <accordion-group heading="Tweede tekst">
+      <my-ng-include src="tpls/info2.html"></my-ng-include>
+    </accordion-group>
+  </accordion>
+</div>

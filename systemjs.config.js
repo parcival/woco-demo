@@ -6,13 +6,16 @@
  */
 (function(global) {
 
-  var ngVer = '@2.0.0-rc.1'; // lock in the angular package version; do not let it float to current!
+  var ngVer = '@2.0.2';
 
   //map tells the System loader where to look for things
   var  map = {
     'app':                        'app', // 'dist',
-    'rxjs':                       'https://npmcdn.com/rxjs@5.0.0-beta.6',
-    'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api' // get latest
+    'typescript':                 '//npmcdn.com/typescript@2.0.3/lib/typescript.js',
+    'rxjs':                       '//npmcdn.com/rxjs@5.0.0-beta.6',
+    'angular2-in-memory-web-api': '//npmcdn.com/angular2-in-memory-web-api', // get latest
+    'moment':                     '//npmcdn.com/moment/moment.js'
+  //  'ng2-bootstrap/ng2-bootstrap': '//unpkg.com/ng2-bootstrap/bundles/ng2-bootstrap.min.js'
   };
 
   //packages tells the System loader how to load when no filename and/or no extension
@@ -22,21 +25,23 @@
     'angular2-in-memory-web-api': { defaultExtension: 'js' },
   };
 
+
   var packageNames = [
       '@angular/common',
       '@angular/compiler',
       '@angular/core',
       '@angular/http',
+      '@angular/forms',
       '@angular/platform-browser',
       '@angular/platform-browser-dynamic',
       '@angular/router',
       '@angular/router-deprecated',
-      '@angular/upgrade',
+      '@angular/upgrade'
   ];
 
   // add map entries for angular packages in the form '@angular/common': 'https://npmcdn.com/@angular/common@0.0.0-3?main=browser'
   packageNames.forEach(function(pkgName) {
-    map[pkgName] = 'https://npmcdn.com/' + pkgName + ngVer;
+    map[pkgName] = '//npmcdn.com/' + pkgName + ngVer;
   });
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
@@ -48,6 +53,9 @@
     transpiler: 'typescript',
     typescriptOptions: {
       emitDecoratorMetadata: true
+    },
+    paths: {
+      'npm:': 'https://unpkg.com/'
     },
     map: map,
     packages: packages

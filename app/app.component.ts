@@ -1,20 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { MyNgInclude } from '../common/myNgInclude.component.ts';
+import { BrowserModule } from '@angular/platform-browser'
+
+// import ng2-bootstrap alerts module
+import { AlertModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
+
+let w:any = window;
+
+if (w && w.__theme === 'bs4') {
+  Ng2BootstrapConfig.theme = Ng2BootstrapTheme.BS4;
+}
+
 
 @Component({
   selector: 'my-app',
-  template: `
-    <h1>Voorbeeldje van geinjecteerde content</h1>
-    <div>
-      <p>Templates included:</p>
-
-      <my-ng-include src="tpls/info1.html"></my-ng-include>
-      <my-ng-include src="tpls/info2.html"></my-ng-include>
-
-    </div>`,
-  directives: [MyNgInclude],
+  templateUrl: 'app/app.component.html',
 })
-export class AppComponent { }
+export class AppComponent {
+  title = 'Minimal NgModule';
+}
+
 
 
 /*
