@@ -11,10 +11,10 @@ if (w && w.__theme === 'bs4') {
   Ng2BootstrapConfig.theme = Ng2BootstrapTheme.BS4;
 }
 
-
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.component.html',
+  styleUrls: ['app/app.component.css' ]
 })
 export class AppComponent {
   title = 'Minimal NgModule';

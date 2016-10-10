@@ -1,11 +1,23 @@
-<h1>Voorbeeldje van geinjecteerde content</h1>
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-offset-4 col-md-6" >
+<h4>Mogelijke antwoorden</h4>
 <div>
   <accordion [closeOthers]="true">
-    <accordion-group heading="Eerste tekst">
-        <my-ng-include src="tpls/info1.html"></my-ng-include>
+    <accordion-group heading="Lekkage aan dak, dakgoot of regenpijp" class="my-heading-first">
+        <my-ng-include src="tpls/dak.html"></my-ng-include>
     </accordion-group>
-    <accordion-group heading="Tweede tekst">
-      <my-ng-include src="tpls/info2.html"></my-ng-include>
+    <accordion-group heading="Lekkende kraan">
+      <my-ng-include src="tpls/kraan.html" class="my-heading-last"></my-ng-include>
+    </accordion-group>
+    <accordion-group heading="Lekkend toilet">
+      <my-ng-include src="tpls/toilet.html" class="my-heading-last"></my-ng-include>
+    </accordion-group>
+    <accordion-group heading="Lekkage aan raam of kozijn">
+      <my-ng-include src="tpls/raam.html" class="my-heading-last"></my-ng-include>
     </accordion-group>
   </accordion>
+</div>
+</div>
+</div>
 </div>
